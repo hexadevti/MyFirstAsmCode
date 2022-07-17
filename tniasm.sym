@@ -1,0 +1,5 @@
+PRESENTATION: equ 0F80h ; last def. pass 2
+VICTORY: equ 05A80h ; last def. pass 2
+MAP_PACMAN: equ 03500h ; last def. pass 2
+BUFFER_VIDEO: equ 08000h ; last def. pass 2
+AREA_ORIGINE: equ 0C26h ; last def. pass 2

@@ -1,0 +1,47 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "dezog",
+            "request": "launch",
+            "name": "Simulator",
+            "remoteType": "zsim",
+            "zsim": {
+                "Z80N": true,
+                "visualMemory": true,
+                "memoryModel": "CUSTOM",
+                "customMemory": { "numberOfBanks": 2, "banks": {  "0": "ROM", "1": "RAM" }},
+                "ulaScreen": true,
+                "zxBorderWidth": 20,
+                "vsyncInterrupt": true,
+                "zxKeyboard": false,
+                "zxBeeper": false
+            },
+            "disassemblerArgs": {
+                "esxdosRst": true
+            },
+            "sjasmplus": [
+                {
+                    "path": "hello-world.sld"
+                }
+            ],
+            "commandsAfterLaunch": [
+                "-logpoint enable",
+                "-assertion enable",
+                "-wpmem enable"
+            ],
+            "history": {
+                "reverseDebugInstructionCount": 1000000,
+                "spotCount": 10,
+                "codeCoverageEnabled": true
+            },
+            "startAutomatically": false,
+            "rootFolder": "${workspaceFolder}",
+            //"load": "Add your .nex or .sna file to load",
+            //"topOfStack": "Add your top of stack / label name"
+        }
+    ]
+}
