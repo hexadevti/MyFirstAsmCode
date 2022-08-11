@@ -1,40 +1,59 @@
-CPU Z80
-FNAME   "output2.bin"
-PRESENTATION: 	EQU $0F80
+PRESENTATION:   EQU 0x4000
+OUTRA:          EQU 0x1000
+PORT0:          EQU 0x00
+PORT1:          EQU 0x01
+PORT2:          EQU 0x02
+PORT3:          EQU 0x03
 
-INCBYTE:        EQU $F000
-PORT0:          EQU 0x0
-PORT1:          EQU 0x1
+org     0x0000
 
-PORT2:          EQU 0x2
+main:
+    ld HL,PRESENTATION
+    call show
+    call clear
+    jp main
 
-PORT3:          EQU 0x3
 
-org     0000h
-ld a,0
-out (PORT0),a
-push HL
-    ld HL,PRESENTATION  
-    ld b,120
+clear:
+    ld e,152
+    ld d,0
+    clines:
+        ld a, d
+        out (PORT1),a
+        ld b,0xff
+        ld c,0
+        ccolumns:
+            ld a, c
+            out (PORT0),a
+            ld a, 0x0
+            out (PORT2),a
+            inc c
+        djnz ccolumns
+        inc d
+        dec e
+        ld b, e
+    djnz clines
+    ret
+ 
+show:
+    ld e,76
     ld d,0
     lines:
-        push BC 
-                ld b,80
-                ld c,0
-                columns:
-                    ld a,d
-                    out (PORT1),a
-                    ld a,c 	 
-                    out (PORT1),a
-                    inc c
-                    ld a,(HL)
-                    out (PORT2),a
-                    inc HL
-                djnz columns
-        pop BC
+        ld a, d
+        out (PORT1),a
+        ld b,128
+        ld c,0
+        columns:
+            ld a, c
+            out (PORT0),a
+            ld a, (hl)
+            out (PORT2),a
+            inc c
+            inc HL
+        djnz columns
         inc d
-    djnz lines	
-pop HL
-ld a,0
-out (PORT3),a
-halt
+        dec e
+        ld b, e
+    djnz lines
+    ret
+
